@@ -122,7 +122,7 @@
         align-items: center;
     }
 
-    
+
     .slider:hover {
         opacity: 1;
     }
@@ -136,7 +136,7 @@
     }
 
     #work_value {
-        color:  #6961d5;
+        color: #6961d5;
         font-weight: bold;
     }
 
@@ -144,8 +144,6 @@
         color: rgb(202, 120, 120);
         font-weight: bold;
     }
-
-
 </style>
 
 <header>
@@ -178,13 +176,17 @@
 
     button.onclick = (event) => {
         interval = setInterval(() => {
-            value_button.textContent = "WORK // " + Math.floor(work_time / 60) + ":" + work_time % 60
-            if (work_time%2 == 0) {
+            if (work_time % 60 < 10) {
+                value_button.textContent = "WORK // " + Math.floor(work_time / 60) + ":0" + work_time % 60
+            } else {
+                value_button.textContent = "WORK // " + Math.floor(work_time / 60) + ":" + work_time % 60
+            }
+            if (work_time % 2 == 0) {
                 value_button.style.opacity = 1;
             } else {
                 value_button.style.opacity = 0.5;
             }
-            work_time-=1
+            work_time -= 1
             if (work_time < 0) {
                 clearInterval(interval);
             }
@@ -194,13 +196,14 @@
     restart_button.onclick = (event) => {
         clearInterval(interval);
         interval = null
+        var calc = 60 - slider.value
         value_button.textContent = slider.value + " min" + " // " + calc + " min"
         value_button.style.opacity = 1;
     }
 
     slider.oninput = (event) => {
         var calc = 60 - slider.value
-        value_button.textContent = slider.value + " min" + " // " + calc + " min";   
+        value_button.textContent = slider.value + " min" + " // " + calc + " min";
         value_button.style.translate = slider.value * 6 + "px"
         work_time = slider.value * 60
     };
