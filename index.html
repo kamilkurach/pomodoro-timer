@@ -96,6 +96,33 @@
         cursor: pointer;
     }
 
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 5px;
+        height: 35px;
+        background: #032c1d;
+        cursor: pointer;
+    }
+
+    .slider::-webkit-slider-runnable-track {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 300%;
+        height: 35px;
+        background-color: rgb(202, 120, 120);
+        outline: none;
+        opacity: 0.8;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+        display: inline-block;
+        /* border-style: solid; */
+        border-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    
     .slider:hover {
         opacity: 1;
     }
@@ -139,6 +166,8 @@
     var slider = document.getElementById("bar_range");
     var button = document.getElementById("start_button");
     var value_button = document.getElementById("value_button");
+    slider.value = 45
+    value_button.style.translate = slider.value * 6 + "px"
 
     var calc = 60 - slider.value
     value_button.textContent = slider.value + " min" + " // " + calc + " min"
