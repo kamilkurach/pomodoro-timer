@@ -14,7 +14,7 @@
         -webkit-appearance: none;
         appearance: none;
         width: 300%;
-        height: 35px;
+        height: 30px;
         background-color: rgb(202, 120, 120);
         outline: none;
         opacity: 0.8;
@@ -29,7 +29,7 @@
     }
 
     input[type="range"]::-moz-range-progress {
-        height: 35px;
+        height: 30px;
         background-color: #6961d5;
         opacity: 1;
     }
@@ -84,14 +84,31 @@
         border-style: solid;
         border-color: black;
         opacity: 0.8;
-        /* margin-left: 130%; */
+        margin-left: 115%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+    .button4 {
+        background-color: #f4c32f;
+        width: 100px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        border-style: solid;
+        border-color: black;
+        opacity: 0.8;
+        margin-left: 130%;
         margin-top: 10px;
         font-size: 16px;
     }
 
     .slider::-moz-range-thumb {
         width: 5px;
-        height: 35px;
+        height: 30px;
         background: #032c1d;
         cursor: grab;
     }
@@ -99,7 +116,7 @@
     .slider::-webkit-slider-thumb {
         -webkit-appearance: none;
         width: 5px;
-        height: 35px;
+        height: 30px;
         background: #032c1d;
         cursor: grab;
     }
@@ -135,6 +152,10 @@
         opacity: 1;
     }
 
+    .button4:hover {
+        opacity: 1;
+    }
+
     #work_value {
         color: #6961d5;
         font-weight: bold;
@@ -154,6 +175,7 @@
     <div>
         <button id="value_button" class="button3">Start</button>
         <input type="range" min="1" max="59" value="1" class="slider" id="bar_range">
+        <button id="set_button" class="button4">Set</button>
         <button id="start_button" class="button1">Start</button>
         <button id="restart_button" class="button2">Reset Timer</button>
     </div>
@@ -174,12 +196,12 @@
     var break_audio = document.getElementById("break_audio");
     var title = document.getElementById("title");
     var slider = document.getElementById("bar_range");
-    var button = document.getElementById("start_button");
+    var set_button = document.getElementById("set_button");
+    var start_button = document.getElementById("start_button");
     var restart_button = document.getElementById("restart_button");
     var value_button = document.getElementById("value_button");
-    slider.value = 45
-    value_button.style.translate = slider.value * 6 + "px"
 
+    slider.value = 45
     var calc = 60 - slider.value
     value_button.textContent = slider.value + " min" + " // " + calc + " min"
 
@@ -188,8 +210,41 @@
     var work_interval = null
     var break_interval = null
     var isWorkCompleted = false
+    var isWorkTimeSet = false
+    var isBreakTimeSet = false
 
-    button.onclick = (event) => {
+    function restart() {
+        clearInterval(work_interval);
+        clearInterval(break_interval);
+        title.textContent = "----//----"
+        work_interval = null
+        break_interval = null
+        isWorkCompleted = false
+        isWorkTimeSet = false
+        isBreakTimeSet = false
+        var calc = 60 - slider.value
+        work_time = slider.value * 60
+        break_time = (calc) * 60
+        value_button.textContent = slider.value + " min" + " // " + calc + " min"
+        value_button.style.opacity = 1;
+        work_audio.pause()
+        break_audio.pause()
+    }
+
+    set_button.onclick = (event) => {
+        if (isWorkTimeSet == false) {
+            work_time = slider.value * 60
+        }
+        if (isBreakTimeSet == false && isWorkTimeSet == true) {
+            var calc = 60 - slider.value
+            break_time = (calc) * 60
+            isBreakTimeSet = true
+        }
+        isWorkTimeSet = true
+        value_button.textContent = work_time / 60 + " min" + " // " + break_time / 60 + " min";
+    }
+
+    start_button.onclick = (event) => {
         work_interval = setInterval(() => {
             if (work_time % 60 < 10) {
                 value_button.textContent = "WORK // " + Math.floor(work_time / 60) + ":0" + work_time % 60
@@ -219,7 +274,7 @@
                         title.textContent = "BREAK // " + Math.floor(break_time / 60) + ":0" + break_time % 60
                     } else {
                         value_button.textContent = "BREAK // " + Math.floor(break_time / 60) + ":" + break_time % 60
-                        title.textContent = "BREAK // " + Math.floor(break_time / 60) + ":0" + break_time % 60
+                        title.textContent = "BREAK // " + Math.floor(break_time / 60) + ":" + break_time % 60
                     }
                     if (break_time % 2 == 0) {
                         value_button.style.opacity = 1;
@@ -229,6 +284,7 @@
                     break_time -= 1
                     if (break_time < 0) {
                         clearInterval(break_interval);
+                        onRestart()
                     }
                 }, 1000);
             }
@@ -236,26 +292,17 @@
     }
 
     restart_button.onclick = (event) => {
-        clearInterval(work_interval);
-        clearInterval(break_interval);
-        title.textContent = "----//----"
-        work_interval = null
-        break_interval = null
-        isWorkCompleted = false
-        var calc = 60 - slider.value
-        work_time = slider.value * 60
-        break_time = (calc) * 60
-        value_button.textContent = slider.value + " min" + " // " + calc + " min"
-        value_button.style.opacity = 1;
-        work_audio.pause()
-        break_audio.pause()
+        restart()
     }
 
     slider.oninput = (event) => {
-        var calc = 60 - slider.value
-        value_button.textContent = slider.value + " min" + " // " + calc + " min";
-        value_button.style.translate = slider.value * 6 + "px"
-        work_time = slider.value * 60
-        break_time = calc * 60
+        if (isWorkTimeSet == false) {
+            work_time = slider.value * 60
+        }
+        if (isBreakTimeSet == false && isWorkTimeSet == true) {
+            var calc = 60 - slider.value
+            break_time = calc * 60
+        }
+        value_button.textContent = work_time / 60 + " min" + " // " + break_time / 60 + " min";
     };
 </script>
