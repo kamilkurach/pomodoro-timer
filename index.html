@@ -2,7 +2,7 @@
 <html>
 <style>
     #body {
-        background-image: linear-gradient(to right, rgb(115, 212, 241), rgb(11, 79, 100));
+        background-image: linear-gradient(to right, rgb(62, 204, 247), rgb(11, 79, 100));
         display: flex;
         justify-content: center;
         align-items: center;
@@ -73,6 +73,22 @@
         font-size: 16px;
     }
 
+    .button3 {
+        background-image: linear-gradient(to right, #6961d5, rgb(202, 120, 120));
+        width: 150px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        border-style: solid;
+        border-color: black;
+        opacity: 0.8;
+        /* margin-left: 130%; */
+        margin-top: 10px;
+        font-size: 16px;
+    }
+
     .slider::-moz-range-thumb {
         width: 5px;
         height: 35px;
@@ -110,9 +126,8 @@
 
 <body id="body">
     <div>
+        <button id="value_button" class="button3">Start</button>
         <input type="range" min="1" max="60" value="1" class="slider" id="bar_range">
-        <p id="work_value"></p>
-        <p id="break_value"></p>
         <button id="start_button" class="button1">Start</button>
         <button id="stop_button" class="button2">Reset Timer</button>
     </div>
@@ -123,21 +138,19 @@
 <script>
     var slider = document.getElementById("bar_range");
     var button = document.getElementById("start_button");
-    var workValue = document.getElementById("work_value");
-    var breakValue = document.getElementById("break_value");
+    var value_button = document.getElementById("value_button");
 
-    workValue.innerHTML = "Work " + slider.value + " min";
     var calc = 60 - slider.value
-    breakValue.innerHTML = "Break " + calc + " min";
+    value_button.textContent = slider.value + " min" + " // " + calc + " min"
 
     button.onclick = (event) => {
         console.log("start");
     }
 
     slider.oninput = (event) => {
-        workValue.innerHTML = "Work " + slider.value + " min";
         var calc = 60 - slider.value
-        breakValue.innerHTML = "Break " + calc + " min";
-        console.log("work: ", slider.value, "break: ", 60 - slider.value);
+        value_button.textContent = slider.value + " min" + " // " + calc + " min";   
+        value_button.style.translate = slider.value * 6 + "px"
+        console.log(slider.style.translate)
     };
 </script>
