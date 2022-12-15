@@ -207,6 +207,8 @@
 
     var work_time = slider.value * 60
     var break_time = (calc) * 60
+    var prev_work_time = null
+    var prev_break_time = null
     var work_interval = null
     var break_interval = null
     var isWorkCompleted = false
@@ -222,10 +224,9 @@
         isWorkCompleted = false
         isWorkTimeSet = false
         isBreakTimeSet = false
-        var calc = 60 - slider.value
-        work_time = slider.value * 60
-        break_time = (calc) * 60
-        value_button.textContent = slider.value + " min" + " // " + calc + " min"
+        work_time = prev_work_time
+        break_time = prev_break_time
+        value_button.textContent = work_time / 60 + " min" + " // " + break_time / 60 + " min";
         value_button.style.opacity = 1;
         work_audio.pause()
         break_audio.pause()
@@ -245,6 +246,8 @@
     }
 
     start_button.onclick = (event) => {
+        prev_work_time = work_time
+        prev_break_time = break_time
         work_interval = setInterval(() => {
             if (work_time % 60 < 10) {
                 value_button.textContent = "WORK // " + Math.floor(work_time / 60) + ":0" + work_time % 60
