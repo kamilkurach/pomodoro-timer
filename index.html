@@ -187,7 +187,7 @@
     var break_time = (calc) * 60
     var work_interval = null
     var break_interval = null
-    var isWorkcompleted = false
+    var isWorkCompleted = false
 
     button.onclick = (event) => {
         work_interval = setInterval(() => {
@@ -206,11 +206,11 @@
             }
             work_time -= 1
             if (work_time < 0) {
-                isWorkcompleted = true
+                isWorkCompleted = true
                 clearInterval(work_interval);
             }
 
-            if (isWorkcompleted == true) {
+            if (isWorkCompleted == true) {
                 work_audio.pause()
                 break_audio.play()
                 break_interval = setInterval(() => {
