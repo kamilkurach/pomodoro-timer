@@ -147,6 +147,7 @@
 </style>
 
 <header>
+    <title id="title">----//----</title>
 </header>
 
 <body id="body">
@@ -161,6 +162,7 @@
 </html>
 
 <script>
+    var title = document.getElementById("title");
     var slider = document.getElementById("bar_range");
     var button = document.getElementById("start_button");
     var restart_button = document.getElementById("restart_button");
@@ -181,8 +183,10 @@
         work_interval = setInterval(() => {
             if (work_time % 60 < 10) {
                 value_button.textContent = "WORK // " + Math.floor(work_time / 60) + ":0" + work_time % 60
+                title.textContent = "WORK // " + Math.floor(work_time / 60) + ":0" + work_time % 60
             } else {
                 value_button.textContent = "WORK // " + Math.floor(work_time / 60) + ":" + work_time % 60
+                title.textContent = "WORK // " + Math.floor(work_time / 60) + ":" + work_time % 60
             }
             if (work_time % 2 == 0) {
                 value_button.style.opacity = 1;
@@ -199,8 +203,10 @@
                 break_interval = setInterval(() => {
                     if (break_time % 60 < 10) {
                         value_button.textContent = "BREAK // " + Math.floor(break_time / 60) + ":0" + break_time % 60
+                        title.textContent = "BREAK // " + Math.floor(break_time / 60) + ":0" + break_time % 60
                     } else {
                         value_button.textContent = "BREAK // " + Math.floor(break_time / 60) + ":" + break_time % 60
+                        title.textContent = "BREAK // " + Math.floor(break_time / 60) + ":0" + break_time % 60
                     }
                     if (break_time % 2 == 0) {
                         value_button.style.opacity = 1;
@@ -219,6 +225,7 @@
     restart_button.onclick = (event) => {
         clearInterval(work_interval);
         clearInterval(break_interval);
+        title.textContent = "----//----"
         work_interval = null
         break_interval = null
         isWorkCompleted = false
