@@ -161,7 +161,17 @@
 
 </html>
 
+<audio id="work_audio">
+    <source src="timer_sound.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="break_audio">
+    <source src="elevator_music.mp3" type="audio/mpeg">
+</audio>
+
 <script>
+    var work_audio = document.getElementById("work_audio");
+    var break_audio = document.getElementById("break_audio");
     var title = document.getElementById("title");
     var slider = document.getElementById("bar_range");
     var button = document.getElementById("start_button");
@@ -190,6 +200,7 @@
             }
             if (work_time % 2 == 0) {
                 value_button.style.opacity = 1;
+                work_audio.play()
             } else {
                 value_button.style.opacity = 0.5;
             }
@@ -200,6 +211,8 @@
             }
 
             if (isWorkcompleted == true) {
+                work_audio.pause()
+                break_audio.play()
                 break_interval = setInterval(() => {
                     if (break_time % 60 < 10) {
                         value_button.textContent = "BREAK // " + Math.floor(break_time / 60) + ":0" + break_time % 60
@@ -234,6 +247,8 @@
         break_time = (calc) * 60
         value_button.textContent = slider.value + " min" + " // " + calc + " min"
         value_button.style.opacity = 1;
+        work_audio.pause()
+        break_audio.pause()
     }
 
     slider.oninput = (event) => {
