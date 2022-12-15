@@ -172,10 +172,13 @@
     value_button.textContent = slider.value + " min" + " // " + calc + " min"
 
     var work_time = slider.value * 60
-    var interval = null
+    var break_time = (calc) * 60
+    var work_interval = null
+    var break_interval = null
+    var isWorkcompleted = false
 
     button.onclick = (event) => {
-        interval = setInterval(() => {
+        work_interval = setInterval(() => {
             if (work_time % 60 < 10) {
                 value_button.textContent = "WORK // " + Math.floor(work_time / 60) + ":0" + work_time % 60
             } else {
@@ -188,15 +191,40 @@
             }
             work_time -= 1
             if (work_time < 0) {
-                clearInterval(interval);
+                isWorkcompleted = true
+                clearInterval(work_interval);
+            }
+
+            if (isWorkcompleted == true) {
+                break_interval = setInterval(() => {
+                    if (break_time % 60 < 10) {
+                        value_button.textContent = "BREAK // " + Math.floor(break_time / 60) + ":0" + break_time % 60
+                    } else {
+                        value_button.textContent = "BREAK // " + Math.floor(break_time / 60) + ":" + break_time % 60
+                    }
+                    if (break_time % 2 == 0) {
+                        value_button.style.opacity = 1;
+                    } else {
+                        value_button.style.opacity = 0.5;
+                    }
+                    break_time -= 1
+                    if (break_time < 0) {
+                        clearInterval(break_interval);
+                    }
+                }, 1000);
             }
         }, 1000)
     }
 
     restart_button.onclick = (event) => {
-        clearInterval(interval);
-        interval = null
+        clearInterval(work_interval);
+        clearInterval(break_interval);
+        work_interval = null
+        break_interval = null
+        isWorkCompleted = false
         var calc = 60 - slider.value
+        work_time = slider.value * 60
+        break_time = (calc) * 60
         value_button.textContent = slider.value + " min" + " // " + calc + " min"
         value_button.style.opacity = 1;
     }
@@ -206,5 +234,6 @@
         value_button.textContent = slider.value + " min" + " // " + calc + " min";
         value_button.style.translate = slider.value * 6 + "px"
         work_time = slider.value * 60
+        break_time = calc * 60
     };
 </script>
