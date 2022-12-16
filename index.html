@@ -191,9 +191,14 @@
     <source src="elevator_music.mp3" type="audio/mpeg">
 </audio>
 
+<audio id="button_audio" preload="auto">
+    <source src="button.mp3" type="audio/mpeg">
+</audio>
+
 <script>
     var work_audio = document.getElementById("work_audio");
     var break_audio = document.getElementById("break_audio");
+    var button_audio = document.getElementById("button_audio");
     var title = document.getElementById("title");
     var slider = document.getElementById("bar_range");
     var set_button = document.getElementById("set_button");
@@ -233,6 +238,7 @@
     }
 
     set_button.onclick = (event) => {
+        button_audio.play()
         if (isWorkTimeSet == false) {
             work_time = slider.value * 60
         }
@@ -246,6 +252,7 @@
     }
 
     start_button.onclick = (event) => {
+        button_audio.play()
         prev_work_time = work_time
         prev_break_time = break_time
         work_interval = setInterval(() => {
@@ -258,9 +265,11 @@
             }
             if (work_time % 2 == 0) {
                 value_button.style.opacity = 1;
-                work_audio.play()
             } else {
                 value_button.style.opacity = 0.5;
+            }
+            if (work_time % 6 == 0) {
+                work_audio.play()
             }
             work_time -= 1
             if (work_time < 0) {
@@ -295,6 +304,7 @@
     }
 
     restart_button.onclick = (event) => {
+        button_audio.play()
         restart()
     }
 
