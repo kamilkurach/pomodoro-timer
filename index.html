@@ -197,6 +197,10 @@
     <source src="elevator_music.mp3" type="audio/mpeg">
 </audio>
 
+<audio id="break_end_audio">
+    <source src="break_end.mp3" type="audio/mpeg">
+</audio>
+
 <audio id="button_audio" preload="auto">
     <source src="button.mp3" type="audio/mpeg">
 </audio>
@@ -204,6 +208,7 @@
 <script>
     var work_audio = document.getElementById("work_audio");
     var break_audio = document.getElementById("break_audio");
+    var break_end_audio = document.getElementById("break_end_audio");
     var button_audio = document.getElementById("button_audio");
     var title = document.getElementById("title");
     var slider = document.getElementById("bar_range");
@@ -302,6 +307,7 @@
                         }
                         break_time -= 1
                         if (break_time < 0) {
+                            break_end_audio.play()
                             restart()
                         }
                     }, 1000);
