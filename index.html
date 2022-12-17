@@ -205,11 +205,16 @@
     <source src="button.mp3" type="audio/mpeg">
 </audio>
 
+<audio id="start_button_audio">
+    <source src="start_button.mp3" type="audio/mpeg">
+</audio>
+
 <script>
     var work_audio = document.getElementById("work_audio");
     var break_audio = document.getElementById("break_audio");
     var break_end_audio = document.getElementById("break_end_audio");
     var button_audio = document.getElementById("button_audio");
+    var start_button_audio = document.getElementById("start_button_audio");
     var title = document.getElementById("title");
     var slider = document.getElementById("bar_range");
     var set_button = document.getElementById("set_button");
@@ -263,7 +268,7 @@
     }
 
     start_button.onclick = (event) => {
-        button_audio.play()
+        start_button_audio.play()
         prev_work_time = work_time
         prev_break_time = break_time
         if (!work_interval) {
