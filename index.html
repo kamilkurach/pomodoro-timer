@@ -261,52 +261,54 @@
         button_audio.play()
         prev_work_time = work_time
         prev_break_time = break_time
-        work_interval = setInterval(() => {
-            if (work_time % 60 < 10) {
-                value_button.textContent = "WORK // " + Math.floor(work_time / 60) + ":0" + work_time % 60
-                title.textContent = "WORK // " + Math.floor(work_time / 60) + ":0" + work_time % 60
-            } else {
-                value_button.textContent = "WORK // " + Math.floor(work_time / 60) + ":" + work_time % 60
-                title.textContent = "WORK // " + Math.floor(work_time / 60) + ":" + work_time % 60
-            }
-            if (work_time % 2 == 0) {
-                value_button.style.opacity = 1;
-            } else {
-                value_button.style.opacity = 0.5;
-            }
-            if (work_time % 6 == 0) {
-                work_audio.play()
-            }
-            work_time -= 1
-            if (work_time < 0) {
-                isWorkCompleted = true
-                clearInterval(work_interval);
-            }
+        if (!work_interval) {
+            work_interval = setInterval(() => {
+                if (work_time % 60 < 10) {
+                    value_button.textContent = "WORK // " + Math.floor(work_time / 60) + ":0" + work_time % 60
+                    title.textContent = "WORK // " + Math.floor(work_time / 60) + ":0" + work_time % 60
+                } else {
+                    value_button.textContent = "WORK // " + Math.floor(work_time / 60) + ":" + work_time % 60
+                    title.textContent = "WORK // " + Math.floor(work_time / 60) + ":" + work_time % 60
+                }
+                if (work_time % 2 == 0) {
+                    value_button.style.opacity = 1;
+                } else {
+                    value_button.style.opacity = 0.5;
+                }
+                if (work_time % 6 == 0) {
+                    work_audio.play()
+                }
+                work_time -= 1
+                if (work_time < 0) {
+                    isWorkCompleted = true
+                    clearInterval(work_interval);
+                }
 
-            if (isWorkCompleted == true) {
-                work_audio.pause()
-                break_audio.play()
-                break_interval = setInterval(() => {
-                    if (break_time % 60 < 10) {
-                        value_button.textContent = "BREAK // " + Math.floor(break_time / 60) + ":0" + break_time % 60
-                        title.textContent = "BREAK // " + Math.floor(break_time / 60) + ":0" + break_time % 60
-                    } else {
-                        value_button.textContent = "BREAK // " + Math.floor(break_time / 60) + ":" + break_time % 60
-                        title.textContent = "BREAK // " + Math.floor(break_time / 60) + ":" + break_time % 60
-                    }
-                    if (break_time % 2 == 0) {
-                        value_button.style.opacity = 1;
-                    } else {
-                        value_button.style.opacity = 0.5;
-                    }
-                    break_time -= 1
-                    if (break_time < 0) {
-                        clearInterval(break_interval);
-                        onRestart()
-                    }
-                }, 1000);
-            }
-        }, 1000)
+                if (isWorkCompleted == true) {
+                    work_audio.pause()
+                    break_audio.play()
+                    break_interval = setInterval(() => {
+                        if (break_time % 60 < 10) {
+                            value_button.textContent = "BREAK // " + Math.floor(break_time / 60) + ":0" + break_time % 60
+                            title.textContent = "BREAK // " + Math.floor(break_time / 60) + ":0" + break_time % 60
+                        } else {
+                            value_button.textContent = "BREAK // " + Math.floor(break_time / 60) + ":" + break_time % 60
+                            title.textContent = "BREAK // " + Math.floor(break_time / 60) + ":" + break_time % 60
+                        }
+                        if (break_time % 2 == 0) {
+                            value_button.style.opacity = 1;
+                        } else {
+                            value_button.style.opacity = 0.5;
+                        }
+                        break_time -= 1
+                        if (break_time < 0) {
+                            clearInterval(break_interval);
+                            onRestart()
+                        }
+                    }, 1000);
+                }
+            }, 1000)
+        }
     }
 
     restart_button.onclick = (event) => {
