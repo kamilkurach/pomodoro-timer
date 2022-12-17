@@ -279,7 +279,7 @@
                     work_audio.play()
                 }
                 work_time -= 1
-                if (work_time < 0) {
+                if (work_time == 0) {
                     isWorkCompleted = true
                     clearInterval(work_interval);
                 }
@@ -302,8 +302,7 @@
                         }
                         break_time -= 1
                         if (break_time < 0) {
-                            clearInterval(break_interval);
-                            onRestart()
+                            restart()
                         }
                     }, 1000);
                 }
