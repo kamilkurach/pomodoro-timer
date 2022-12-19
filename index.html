@@ -209,12 +209,18 @@
     <source src="resources/start_button.mp3" type="audio/mpeg">
 </audio>
 
+<audio id="slider_audio">
+    <source src="resources/slider_effect.mp3" type="audio/mpeg">
+</audio>
+
+
 <script>
     var work_audio = document.getElementById("work_audio");
     var break_audio = document.getElementById("break_audio");
     var break_end_audio = document.getElementById("break_end_audio");
     var button_audio = document.getElementById("button_audio");
     var start_button_audio = document.getElementById("start_button_audio");
+    var slider_audio = document.getElementById("slider_audio");
     var title = document.getElementById("title");
     var slider = document.getElementById("bar_range");
     var set_button = document.getElementById("set_button");
@@ -336,4 +342,8 @@
         }
         value_button.textContent = work_time / 60 + " min" + " // " + break_time / 60 + " min";
     };
+
+    slider.onchange = (event) => {
+        slider_audio.play()
+    }
 </script>
