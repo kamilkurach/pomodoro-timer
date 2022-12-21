@@ -302,6 +302,7 @@
 
                 if (isWorkCompleted == true) {
                     work_audio.pause()
+                    break_audio.volume = 0.25
                     break_audio.play()
                     break_interval = setInterval(() => {
                         if (break_time % 60 < 10) {
