@@ -260,6 +260,7 @@
     }
 
     set_button.onclick = (event) => {
+        button_audio.volume = 0.95
         button_audio.play()
         if (isWorkTimeSet == false) {
             work_time = slider.value * 60
@@ -274,6 +275,7 @@
     }
 
     start_button.onclick = (event) => {
+        start_button_audio.volume = 0.95
         start_button_audio.play()
         prev_work_time = work_time
         prev_break_time = break_time
@@ -319,6 +321,7 @@
                         }
                         break_time -= 1
                         if (break_time < 0) {
+                            break_end_audio.volume = 0.95
                             break_end_audio.play()
                             restart()
                         }
@@ -329,6 +332,7 @@
     }
 
     restart_button.onclick = (event) => {
+        button_audio.volume = 0.95
         button_audio.play()
         restart()
     }
